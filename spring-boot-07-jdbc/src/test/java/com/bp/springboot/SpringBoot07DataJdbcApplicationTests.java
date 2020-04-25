@@ -15,16 +15,16 @@ import java.sql.SQLException;
 public class SpringBoot07DataJdbcApplicationTests {
 
 
-	@Autowired
-	DataSource dataSource;
+    @Autowired
+    DataSource dataSource;
 
-	@Test
-	public void contextLoads() throws SQLException {
-		//org.apache.tomcat.jdbc.pool.DataSource
-		System.out.println(dataSource.getClass());
+    @Test
+    public void contextLoads() throws SQLException {
+        //org.apache.tomcat.jdbc.pool.DataSource
+        System.out.println(dataSource.getClass());
 
-		Connection connection = dataSource.getConnection();
-		System.out.println(connection);
-		connection.close();
-	}
+        Connection connection = dataSource.getConnection();
+        System.out.println(connection);
+        connection.close();
+    }
 }

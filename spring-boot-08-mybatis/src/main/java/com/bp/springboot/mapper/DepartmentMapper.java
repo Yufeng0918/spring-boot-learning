@@ -1,7 +1,11 @@
 package com.bp.springboot.mapper;
 
 import com.bp.springboot.bean.Department;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 public interface DepartmentMapper {
 

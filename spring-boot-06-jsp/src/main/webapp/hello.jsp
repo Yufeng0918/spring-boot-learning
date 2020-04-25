@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>Hello JSP</h1>
-    <a href="abc">abc</a>
+<h1>Hello JSP</h1>
+<a href="abc">abc</a>
 </body>
 </html>

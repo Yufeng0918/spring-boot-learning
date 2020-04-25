@@ -21,18 +21,18 @@ public class DeptController {
 
 
     @GetMapping("/dept/{id}")
-    public Department getDepartment(@PathVariable("id") Integer id){
+    public Department getDepartment(@PathVariable("id") Integer id) {
         return departmentMapper.getDeptById(id);
     }
 
     @GetMapping("/dept")
-    public Department insertDept(Department department){
+    public Department insertDept(Department department) {
         departmentMapper.insertDept(department);
         return department;
     }
 
     @GetMapping("/emp/{id}")
-    public Employee getEmp(@PathVariable("id") Integer id){
+    public Employee getEmp(@PathVariable("id") Integer id) {
         return employeeMapper.getEmpById(id);
     }
 }

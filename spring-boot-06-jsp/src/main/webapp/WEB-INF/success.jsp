@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>SUCCESS</h1>
-    <h3>${msg}</h3>
+<h1>SUCCESS</h1>
+<h3>${msg}</h3>
 </body>
 </html>

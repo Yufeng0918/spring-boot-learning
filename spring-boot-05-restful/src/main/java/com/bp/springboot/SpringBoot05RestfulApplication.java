@@ -5,6 +5,7 @@ package com.bp.springboot;
  * @Date: 11/4/20 08:26
  * @Description:
  */
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

@@ -8,9 +8,9 @@ public class Dog {
     @Override
     public String toString() {
         return "Dog{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                '}';
+               "name='" + name + '\'' +
+               ", age=" + age +
+               '}';
     }
 
     public String getName() {

@@ -11,31 +11,30 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * SpringBoot单元测试;
- *
+ * <p>
  * 可以在测试期间很方便的类似编码一样进行自动注入等容器的功能
- *
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringBoot02ConfigApplicationTests {
 
-	@Autowired
-	Person person;
+    @Autowired
+    Person person;
 
-	@Autowired
-	ApplicationContext ioc;
+    @Autowired
+    ApplicationContext ioc;
 
-	@Test
-	public void testHelloService(){
+    @Test
+    public void testHelloService() {
 //		boolean b = ioc.containsBean("helloService");
-		System.out.println("bean in beans.xml: " + ioc.containsBean("helloService"));
-		System.out.println("bean in @Configuration's @Bean: " + ioc.containsBean("helloService02"));
-	}
+        System.out.println("bean in beans.xml: " + ioc.containsBean("helloService"));
+        System.out.println("bean in @Configuration's @Bean: " + ioc.containsBean("helloService02"));
+    }
 
 
-	@Test
-	public void contextLoads() {
-		System.out.println(person);
-	}
+    @Test
+    public void contextLoads() {
+        System.out.println(person);
+    }
 
 }

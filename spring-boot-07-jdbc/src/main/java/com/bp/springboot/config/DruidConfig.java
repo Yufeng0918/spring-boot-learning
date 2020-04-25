@@ -7,6 +7,7 @@ package com.bp.springboot.config;
 //import org.springframework.boot.web.servlet.FilterRegistrationBean;
 //import org.springframework.boot.web.servlet.ServletRegistrationBean;
 //import org.springframework.context.annotation.Bean;
+
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
@@ -32,15 +33,16 @@ public class DruidConfig {
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource druid(){
-       return new DruidDataSource();
+    public DataSource druid() {
+        return new DruidDataSource();
     }
 
     //配置Druid的监控
     @Bean
-    public ServletRegistrationBean statViewServlet(){
+    public ServletRegistrationBean statViewServlet() {
 
-        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
+        ServletRegistrationBean servletRegistrationBean =
+                new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
         servletRegistrationBean.addInitParameter("allow", "*");
         servletRegistrationBean.addInitParameter("deny", "192.168.1.100");
         servletRegistrationBean.addInitParameter("loginUsername", "admin");
@@ -50,14 +52,14 @@ public class DruidConfig {
     }
 
     @Bean
-    public FilterRegistrationBean webStatFilter(){
+    public FilterRegistrationBean webStatFilter() {
         FilterRegistrationBean bean = new FilterRegistrationBean();
         bean.setFilter(new WebStatFilter());
 
-        Map<String,String> initParams = new HashMap<>();
-        initParams.put("exclusions","*.js,*.css,/druid/*");
+        Map<String, String> initParams = new HashMap<>();
+        initParams.put("exclusions", "*.js,*.css,/druid/*");
         bean.setInitParameters(initParams);
         bean.setUrlPatterns(Arrays.asList("/*"));
-        return  bean;
+        return bean;
     }
 }
