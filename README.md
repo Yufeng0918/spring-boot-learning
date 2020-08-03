@@ -414,6 +414,7 @@ spring:
 
 ## 11. 自动配置原理
 [配置文件能配置的属性参照](https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/htmlsingle/#common-application-properties)
+
 #### 自动配置原理
 - SpringBoot启动的时候加载主配置类，开启了自动配置功能 @EnableAutoConfiguration
 - @EnableAutoConfiguration
@@ -567,7 +568,12 @@ public class HttpEncodingAutoConfiguration {
 public class HttpEncodingProperties {
    public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 ```
+![](images/spring-boot-autoconfig.png)
+
+
+
 #### Summary
+
 - SpringBoot启动会加载大量的自动配置类**
 - 我们看我们需要的功能有没有SpringBoot默认写好的自动配置类
 - 我们再来看这个自动配置类中到底配置了哪些组件, 只要我们要用的组件有，我们就不需要再来配置了
@@ -1636,7 +1642,7 @@ public FilterRegistrationBean myFilter(){
     return registrationBean;
 }
 
-```java
+​```java
 @Bean
 public ServletListenerRegistrationBean myListener(){
     ServletListenerRegistrationBean<MyListener> registrationBean = new ServletListenerRegistrationBean<>(new MyListener());
