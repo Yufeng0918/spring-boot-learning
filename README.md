@@ -574,7 +574,7 @@ public class HttpEncodingProperties {
 
 #### Summary
 
-- SpringBoot启动会加载大量的自动配置类**
+- SpringBoot启动会加载大量的自动配置类
 - 我们看我们需要的功能有没有SpringBoot默认写好的自动配置类
 - 我们再来看这个自动配置类中到底配置了哪些组件, 只要我们要用的组件有，我们就不需要再来配置了
 - 给容器中自动配置类添加组件的时候，会从properties类中获取某些属性。我们就可以在配置文件中指定这些属性的值
@@ -2330,19 +2330,26 @@ spring:
 ***
 
 ## 23. 启动配置原理
-- 重要的事件回调机制配置在META-INF/spring.factories
-    + ApplicationContextInitializer
-    + SpringApplicationRunListener
-- 容器启动
-    + ApplicationRunner
-    + CommandLineRunner
-- 启动流程
-    + 创建SpringApplication对象
-    + 判断应用类型，REACTIVE，SERVLET, NONE
-    + SpringFactoriesLoader 从classpath找到 "META-INF/spring.factories" 
-        + ApplicationContextInitializer
-        + ApplicationListener
-    + 寻找有main方法的启动类
+#### 23.1 重要的事件回调机制配置在META-INF/spring.factories
+
++ ApplicationContextInitializer
++ SpringApplicationRunListener
+
+#### 23.2 容器启动
+
++ ApplicationRunner
++ CommandLineRunner
+
+#### 23.3 启动流程
+
+##### 创建SpringApplication对象
+
++ 判断应用类型，REACTIVE，SERVLET, NONE
++ SpringFactoriesLoader 从classpath找到 "META-INF/spring.factories" 
+    + **ApplicationContextInitializer**
+    + **ApplicationListener**
++ 寻找有main方法的启动类
+
 ```java
 public class SpringApplication {
     public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySources) {
@@ -2359,28 +2366,61 @@ public class SpringApplication {
 ![](images/搜狗截图20180306145727.png)
 ![](images/搜狗截图20180306145855.png)
 
-   + 运行run() 方法
-        + 从classpath找到 "META-INF/spring.factories" 获取 SpringApplicationRunListener
-        + EventPublisherListener 作为 SpringApplicationRunListener
-        + 回调 SpringApplicationRunListener.starting()
-        + prepareEnvironment()
-            + 创建环境
-            + 回调 SpringApplicationRunListener.environmentPrepared()
-        + createApplicationContext()
-            + 判断是创建WEB IOC容器还是普通IOC容器
-        + prepareContext()
-            + 复制enviroment 到容器
-            + 回调ApplicationContextInitializer.initialze()   
-            + 回调SpringApplicationRunListener.contextPrepared(context); 
-            + 回调SpringApplicationRunListener.contextLoaded(context);
-        + refreshContext()
-            + IOC 容器初始化，创建singleton类
-            + 创建嵌入式WebContainer 并启动
-        + afterRefresh()
-            + 回调IOC容器中获取所有 ApplicationRunner 和 CommandLineRunner 的run()
-        + started()
-            + 回调SpringApplicationRunListener.started(context);
-        + 返回IOC容器
+##### 运行run() 方法
+
++ **SpringApplicationRunListener**: **从classpath找到 "META-INF/spring.factories" 获取 SpringApplicationRunListener, **EventPublishingRunListener 作为 SpringApplicationRunListener**
+    + EventPublishingRunListener **持有SpringApplication中所有的ApplicationListener**
+    + EventPublishingRunListener以后会**广播事件到所有的ApplicationListener, ApplicationListener根据事件的类型进行更新**
+
+````java
+public class EventPublishingRunListener implements SpringApplicationRunListener, Ordered {
+
+	private final SpringApplication application;
+
+	private final String[] args;
+
+	private final SimpleApplicationEventMulticaster initialMulticaster;
+
+	public EventPublishingRunListener(SpringApplication application, String[] args) {
+		this.application = application;
+		this.args = args;
+		this.initialMulticaster = new SimpleApplicationEventMulticaster();
+		for (ApplicationListener<?> listener : application.getListeners()) {
+			this.initialMulticaster.addApplicationListener(listener);
+		}
+	}
+}
+````
+
++ 回调 SpringApplicationRunListener.starting() -> **ApplicationStartingEvent**
++ prepareEnvironment()
+    + **创建环境**ConfiguratableEnvironment
+    + 回调 SpringApplicationRunListener.environmentPrepared() -> **ApplicationEnvironmentPreparedEvent**
++ createApplicationContext()
+    + 判断是创建**WEB IOC容器还是普通IOC容器**
++ prepareContext()
+    + 复制enviroment 到容器
+    + 回调ApplicationContextInitializer.initialze()   
+    + 回调SpringApplicationRunListener.contextPrepared(context) -> **ApplicationContextInitializedEvent**
+    + 回调SpringApplicationRunListener.contextLoaded(context) -> **ApplicationPreparedEvent**
++ refreshContext()
+    + IOC 容器初始化，创建singleton类
+    + 创建嵌入式WebContainer 并启动
++ afterRefresh()
++ started()
+    + 回调SpringApplicationRunListener.started(context) -> **ApplicationStartedEvent**
++ 回调IOC容器中获取所有 **ApplicationRunner 和 CommandLineRunner 的run()**
++ 返回IOC容器
+
+| 阶段               | 事件                                                         |
+| ------------------ | ------------------------------------------------------------ |
+| starting           | ApplicationStartingEvent                                     |
+| prepareEnvironment | ApplicationEnvironmentPreparedEvent                          |
+| prepareContext     | ApplicationContextInitializedEvent<br />ApplicationPreparedEvent |
+| refreshContext     |                                                              |
+| afterRefresh       |                                                              |
+| started            | ApplicationStartedEvent                                      |
+
 ```java
 public class SpringApplication {
     public ConfigurableApplicationContext run(String... args) {
@@ -2444,7 +2484,7 @@ public class HelloApplicationContextInitializer implements ApplicationContextIni
     }
 }
 ```
-- SpringApplicationRunListener**
+- SpringApplicationRunListener
 ```java
 public class HelloSpringApplicationRunListener implements SpringApplicationRunListener {
 
