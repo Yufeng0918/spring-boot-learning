@@ -31,7 +31,7 @@
         <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 </dependencies>
-```
+```xml
 
 #### java编写一个主程序；启动Spring Boot应用
 + @SpringBootApplication 来标注一个主程序类，说明这是一个Spring Boot应用
