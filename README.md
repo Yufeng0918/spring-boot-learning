@@ -31,7 +31,7 @@
         <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 </dependencies>
-```xml
+​```xml
 
 #### java编写一个主程序；启动Spring Boot应用
 + @SpringBootApplication 来标注一个主程序类，说明这是一个Spring Boot应用
@@ -241,7 +241,7 @@ public class Person {
     private Integer age;
     private Boolean boss;
     private Date birth;
-
+    
     private Map<String,Object> maps;
     private List<Object> lists;
     private Dog dog;
@@ -272,7 +272,7 @@ public class Person {
 | 复杂类型封装(集合)     | 支持                       | 不支持    |
 
 #### 配置文件注入值数据校验
-```java
+​```java
 @Component
 @ConfigurationProperties(prefix = "person")
 @Validated
@@ -2411,6 +2411,8 @@ public class EventPublishingRunListener implements SpringApplicationRunListener,
     + 回调SpringApplicationRunListener.started(context) -> **ApplicationStartedEvent**
 + 回调IOC容器中获取所有 **ApplicationRunner 和 CommandLineRunner 的run()**
 + 返回IOC容器
+
+![](images/spring-boot-initialize.png)
 
 | 阶段               | 事件                                                         |
 | ------------------ | ------------------------------------------------------------ |
