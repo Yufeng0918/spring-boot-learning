@@ -19,7 +19,7 @@
 ## 3. Spring Boot HelloWorld
 #### 创建一个maven工程
 #### xml 导入spring boot相关的依赖
-```
+```XML
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
@@ -31,11 +31,13 @@
         <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 </dependencies>
-​```xml
+```
+
 
 #### java编写一个主程序；启动Spring Boot应用
 + @SpringBootApplication 来标注一个主程序类，说明这是一个Spring Boot应用
-```
+
+```JAVA
 @SpringBootApplication
 public class HelloWorldMainApplication {
     public static void main(String[] args) {
@@ -43,21 +45,25 @@ public class HelloWorldMainApplication {
     }
 }
 ```
+
 #### java编写相关的Controller、Service
-```
+
+
+
+```JAVA
 @Controller
 public class HelloController {
-
-    @ResponseBody
-    @RequestMapping("/hello")
-    public String hello(){
-        return "Hello World!";
-    }
+@ResponseBody
+@RequestMapping("/hello")
+public String hello(){
+    return "Hello World!";
 }
-
+}
 ```
 #### 简化部署
-```
+
+```XML
+
 <!-- 这个插件，可以将应用打包成一个可执行的jar包；-->
 <build>
     <plugins>
@@ -68,13 +74,14 @@ public class HelloController {
     </plugins>
 </build>
 ```
-***
+
 
 ## 4. Hello World探究
 #### 父项目
 - spring-boot-dependencies 管理版本
 - 以后我们导入依赖默认是不需要写版本；（没有在dependencies里面管理的依赖自然需要声明版本号）
-```
+
+```XML
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
@@ -87,10 +94,12 @@ public class HelloController {
   <relativePath>../../spring-boot-dependencies</relativePath>
 </parent>
 ```
+
+
 #### 启动器
 - spring-boot-starter-web：帮我们导入了web模块正常运行所依赖的组件
 - Spring Boot将所有的功能场景都抽取出来，做成一个个的starters，只需要在项目里面引入这些starter相关场景的所有依赖都会导入进来
-```
+```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-web</artifactId>
@@ -98,7 +107,7 @@ public class HelloController {
 ```
 #### 主程序类，主入口类
 -  Spring Boot应用标注在某个类上说明这个类是SpringBoot的主配置类，SpringBoot就应该运行这个类的main方法来启动SpringBoot应用；
-```
+```java
 @SpringBootApplication
 public class HelloWorldMainApplication {
 
@@ -106,7 +115,6 @@ public class HelloWorldMainApplication {
         SpringApplication.run(HelloWorldMainApplication.class,args);
     }
 }
-
 ```
 - @SpringBootConfiguration:Spring Boot的配置类；
 - @Configuration:配置类上来标注这个注解；
@@ -200,7 +208,7 @@ pets:
 pets: [cat,dog,pig]
 ```
 
-## 6. 配置文件值注入
+## 7. 配置文件值注入
 - 配置文件
     + properties required native-to-ascii conversion
 ```
@@ -272,7 +280,7 @@ public class Person {
 | 复杂类型封装(集合)     | 支持                       | 不支持    |
 
 #### 配置文件注入值数据校验
-​```java
+```java
 @Component
 @ConfigurationProperties(prefix = "person")
 @Validated
@@ -331,7 +339,7 @@ public class MyAppConfig {
 
 ## 7. 配置文件占位符
 #### 随机数
-```java
+​```java
 ${random.value}, ${random.int}, ${random.long}
 ${random.int(10)}, ${random.int[1024,65536]}
 ```
