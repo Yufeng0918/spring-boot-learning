@@ -23,3 +23,5 @@ include 'spring-boot-11-starter'
 findProject(':spring-boot-11-starter')?.name = 'spring-boot-11-starter'
 include 'spring-boot-11-starter-autoconfig'
 findProject(':spring-boot-11-starter-autoconfig')?.name = 'spring-boot-11-starter-autoconfig'
+include 'spring-boot-12-state-machine'
+
